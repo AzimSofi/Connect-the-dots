@@ -26,14 +26,14 @@ public class Level {
     }
 
     private void paintDot(Graphics g, int x, int y, int cellSize, Color color) {
-        int dotSize = cellSize * 7 / 10;
+        int dotDiameter = cellSize * 7 / 10;
     
-        int dotX = x + (cellSize - dotSize) / 2;
-        int dotY = y + (cellSize - dotSize) / 2;
+        int dotX = x + (cellSize - dotDiameter) / 2;
+        int dotY = y + (cellSize - dotDiameter) / 2;
     
         g.setColor(color);
         
-        g.fillOval(dotX, dotY, dotSize, dotSize);
+        g.fillOval(dotX, dotY, dotDiameter, dotDiameter);
     }
     
 }
