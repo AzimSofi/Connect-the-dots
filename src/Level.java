@@ -14,9 +14,9 @@ public class Level {
     }
 
     public void paint(Graphics g, int cellSize) {
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[i].length; j++) {
-                int cellValue = grid[i][j];
+        for (int i = 0; i < this.grid.length; i++) {
+            for (int j = 0; j < this.grid[i].length; j++) {
+                int cellValue = this.grid[i][j];
                 if (cellValue != 0) {
                     Color dotColor = COLORS[cellValue - 1];
                     paintDot(g, j * cellSize, i * cellSize, cellSize, dotColor);
