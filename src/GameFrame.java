@@ -4,11 +4,11 @@ public class GameFrame extends JFrame {
 
     GameFrame() {
         this.add(new GamePanel());
-        this.setTitle("Snake");
+        this.setTitle("Connect the dots");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
-        this.pack(); // fit all component to jframe
+        this.pack();
         this.setVisible(true);
-        this.setLocationRelativeTo(null); // middle of the screen
+        this.setLocationRelativeTo(null);
     }
 }
