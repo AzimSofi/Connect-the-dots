@@ -2,7 +2,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class GamePanel extends JPanel implements ActionListener, MouseListener, MouseMotionListener {
+public class GamePanel extends JPanel implements MouseListener, MouseMotionListener {
 	static final int SCREEN_WIDTH = 450;
 	static final int SCREEN_HEIGHT = 450;
 
@@ -66,14 +66,12 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		levelOne.mouseReleasedEvent(new Vector2i(e.getX(), e.getY()));
+		levelOne.mouseReleasedEvent();
 		repaint();
-	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		update();
-		repaint(); // calls paintComponent to render objects
+		if (levelOne.isGameOver()) {
+			System.exit(0);
+		}
 	}
 
 	// ------------------------- IGNORE CODE BELOW ------------------------ //

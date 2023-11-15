@@ -17,6 +17,7 @@ public class Level {
             Color.GREEN, // 4
             Color.YELLOW // 5
     };
+    private boolean gameOver;
 
     Level(int SCREEN_WIDTH, int SCREEN_HEIGHT) {
         this.SCREEN_WIDTH = SCREEN_WIDTH;
@@ -27,8 +28,10 @@ public class Level {
         this.MAX_ROWS = grid.length;
         try {
             this.MAX_COLS = grid[0].length;
+            this.gameOver = false;
         } catch (ArrayIndexOutOfBoundsException exception) {
             System.err.println("Grid Structure invalid. Please create a NxN grid!");
+            this.gameOver = true;
         }
 
         this.grid = new Cell[this.MAX_ROWS][];
@@ -54,8 +57,32 @@ public class Level {
         return this.grid[point.y][point.x].color;
     }
 
+    private boolean isGridFull() {
+        for (int i = 0; i < this.grid.length; i++) {
+            for (int j = 0; j < this.grid[i].length; j++) {
+                if (this.grid[i][j].dir == 0)
+                    return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean isGameOver() {
+        return this.gameOver;
+    }
+
     private boolean isNode(Vector2i point) {
         return this.grid[point.y][point.x].node;
+    }
+
+    private boolean isMouseInBound(Vector2i mousePos) {
+        int N_PANEL_H = this.MAX_COLS * this.CELLSIZE;
+        int N_PANEL_W = this.MAX_ROWS * this.CELLSIZE;
+
+        boolean b_x = mousePos.x >= this.OFFSET.x && mousePos.x < this.OFFSET.x + N_PANEL_H;
+        boolean b_y = mousePos.y >= this.OFFSET.y && mousePos.y < this.OFFSET.y + N_PANEL_W;
+
+        return b_x && b_y;
     }
 
     private Vector2i mouseToPoint2i(Vector2i mousePos) {
@@ -73,16 +100,6 @@ public class Level {
             }
         }
         return n;
-    }
-
-    private boolean isMouseInBound(Vector2i mousePos) {
-        int N_PANEL_H = this.MAX_COLS * this.CELLSIZE;
-        int N_PANEL_W = this.MAX_ROWS * this.CELLSIZE;
-
-        boolean b_x = mousePos.x >= this.OFFSET.x && mousePos.x < this.OFFSET.x + N_PANEL_H;
-        boolean b_y = mousePos.y >= this.OFFSET.y && mousePos.y < this.OFFSET.y + N_PANEL_W;
-
-        return b_x && b_y;
     }
 
     public void mousePressEvent(Vector2i mousePos) {
@@ -105,21 +122,15 @@ public class Level {
             } else if (this.isNode(point)) {
                 this.trail.setColor(this.grid[point.y][point.x].color);
                 this.trail.addPoint(point);
-                // System.out.println("Mouse Pressed = Point Added (" + point.x + ", " + point.y
-                // + ")"); // temp (can delete)
-            } else {
-                // System.out.println("Mouse Pressed = Not a point color"); // temp (can delete)
             }
-        } else {
-            // System.out.println("Mouse Pressed = Out of bound"); // temp (can delete)
         }
     }
 
-    public void mouseReleasedEvent(Vector2i mousePos) {
-        if (this.isMouseInBound(mousePos)) {
-            Vector2i point = this.mouseToPoint2i(mousePos);
-            if (this.isNode(point) && this.getGridColor(point) == trail.getColor() && trail.getIndex() > 0) {
-                // System.out.println("Mouse Released = Points Connected"); // temp
+    public void mouseReleasedEvent() {
+        Vector2i point = this.trail.getTop();
+        if (point != null) {
+            if (this.isNode(point) && this.getGridColor(point) == trail.getColor()
+                    && trail.getIndex() > 0) {
 
                 int[] dirs = trail.getDirs();
                 while (trail.getTop() != null) {
@@ -129,11 +140,9 @@ public class Level {
                     this.grid[trailPoint.y][trailPoint.x].dir = dirs[currentIndex];
                     this.grid[trailPoint.y][trailPoint.x].color = trail.getColor();
                 }
-            } else {
-                // System.out.println("Mouse Released = No Connections"); // temp
+
+                this.gameOver = this.isGridFull();
             }
-        } else {
-            // System.out.println("Mouse Released = No Connections"); // temp
         }
         trail.clear(); // reset trail points and color
     }
@@ -147,8 +156,6 @@ public class Level {
                     (trail.getColor() == this.getGridColor(point) || this.getGridColor(point) == 0) &&
                     !(this.isNode(this.trail.getTop()) && this.trail.getIndex() > 0)) {
                 this.trail.addPoint(point);
-                // System.out.println("Mouse Drag = Point Added (" + point.x + ", " + point.y +
-                // ")"); // temp (can delete)
             } else if (this.trail.isPrevPoint(point)) {
                 this.trail.pop();
             }
