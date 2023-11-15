@@ -4,7 +4,7 @@ public class GameFrame extends JFrame {
 
     GameFrame() {
         this.add(new GamePanel());
-        this.setTitle("Connect the dots");
+        this.setTitle("Connect The Choromosomes");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
         this.pack();

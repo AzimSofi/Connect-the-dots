@@ -2,139 +2,98 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class GamePanel extends JPanel implements ActionListener{
+public class GamePanel extends JPanel implements ActionListener, MouseListener, MouseMotionListener {
+	static final int SCREEN_WIDTH = 450;
+	static final int SCREEN_HEIGHT = 450;
 
-    static final int UNIT_SIZE = 150;
-	static final int SCREEN_WIDTH = UNIT_SIZE*3;
-	static final int SCREEN_HEIGHT = UNIT_SIZE*3;
-	boolean running = false;
+	private Level levelOne;
 
-    private Level levelOne;
-	
-	GamePanel(){
-		this.setPreferredSize(new Dimension(SCREEN_WIDTH,SCREEN_HEIGHT));
+	GamePanel() {
+		this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
 		this.setBackground(Color.black);
 		this.setFocusable(true);
-		this.addKeyListener(new MyKeyAdapter());
-		startGame();
-	}
-	
-	public void startGame() {
-        running = true;
-
-        int[][] levelData = {
-            {1, 0, 2},
-            {0, 0, 0},
-            {0, 1, 2}
-        };
-
-        levelOne = new Level(levelData);
-    }
-
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        draw(g);
-    }
-
-    public void draw(Graphics g) {
-
-        if (running) {
-
-            for (int i = 0; i < SCREEN_WIDTH / UNIT_SIZE; i++) {
-                g.drawLine(i * UNIT_SIZE, 0, i * UNIT_SIZE, SCREEN_HEIGHT);
-                g.drawLine(0, i * UNIT_SIZE, SCREEN_WIDTH, i * UNIT_SIZE);
-            }
-
-            if (levelOne != null) {
-                levelOne.paint(g, UNIT_SIZE);
-            }
-        } else {
-            gameOver(g);
-        }
-    }
-
-	public void move(){
+		this.addMouseListener(this);
+		this.addMouseMotionListener(this);
+		init();
 	}
 
-	public void checkCollisions() {
-		//checks if head collides with body
-		// for(int i = bodyParts;i>0;i--) {
-		// 	if((x[0] == x[i])&& (y[0] == y[i])) {
-		// 		running = false;
-		// 	}
-		// }
-		// //check if head touches left border
-		// if(x[0] < 0) {
-		// 	running = false;
-		// }
-		// //check if head touches right border
-		// if(x[0] > SCREEN_WIDTH) {
-		// 	running = false;
-		// }
-		// //check if head touches top border
-		// if(y[0] < 0) {
-		// 	running = false;
-		// }
-		// //check if head touches bottom border
-		// if(y[0] > SCREEN_HEIGHT) {
-		// 	running = false;
-		// }
-		
-		// if(!running) {
-		// 	timer.stop();
-		// }
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		render(g);
 	}
 
-	public void gameOver(Graphics g) {
-		//Score
-		// g.setColor(Color.red);
-		// g.setFont( new Font("Ink Free",Font.BOLD, 40));
-		// FontMetrics metrics1 = getFontMetrics(g.getFont());
-		// g.drawString("Score: "+applesEaten, (SCREEN_WIDTH - metrics1.stringWidth("Score: "+applesEaten))/2, g.getFont().getSize());
-		//Game Over text
-		g.setColor(Color.red);
-		g.setFont( new Font("Ink Free",Font.BOLD, 75));
-		FontMetrics metrics2 = getFontMetrics(g.getFont());
-		g.drawString("Good game", (SCREEN_WIDTH - metrics2.stringWidth("Good game"))/2, SCREEN_HEIGHT/2);
+	public void init() {
+		// int[][] levelData = {
+		// { 1, 1, 2 },
+		// { 0, 0, 0 },
+		// { 0, 0, 2 }
+		// };
+		int[][] levelData = {
+				{ 1, 0, 0, 0, 0 },
+				{ 2, 1, 0, 5, 0 },
+				{ 0, 3, 4, 0, 0 },
+				{ 0, 0, 5, 0, 4 },
+				{ 2, 0, 0, 0, 3 }
+		};
+		// int[][] levelData = {
+		// { 1, 0, 2 },
+		// { 0, 0, 3 },
+		// { 0, 1, 2 },
+		// { 0, 3, 0 }
+		// };
+		levelOne = new Level(SCREEN_WIDTH, SCREEN_HEIGHT);
+		levelOne.setGrid(levelData);
 	}
-    
+
+	public void update() { // Unused for now
+	}
+
+	public void render(Graphics g) {
+		levelOne.render(g);
+	}
+
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		
-		if(running) {
-			// move();
-			// checkApple();
-			// checkCollisions();
-		}
+	public void mousePressed(MouseEvent e) {
+		levelOne.mousePressEvent(new Vector2i(e.getX(), e.getY()));
 		repaint();
 	}
-	
-	public class MyKeyAdapter extends KeyAdapter{
-		@Override
-		public void keyPressed(KeyEvent e) {
-			// switch(e.getKeyCode()) {
-			// case KeyEvent.VK_LEFT:
-			// 	if(direction != 'R') {
-			// 		direction = 'L';
-			// 	}
-			// 	break;
-			// case KeyEvent.VK_RIGHT:
-			// 	if(direction != 'L') {
-			// 		direction = 'R';
-			// 	}
-			// 	break;
-			// case KeyEvent.VK_UP:
-			// 	if(direction != 'D') {
-			// 		direction = 'U';
-			// 	}
-			// 	break;
-			// case KeyEvent.VK_DOWN:
-			// 	if(direction != 'U') {
-			// 		direction = 'D';
-			// 	}
-			// 	break;
-			// }
-		}
+
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		levelOne.mouseDragEvent(new Vector2i(e.getX(), e.getY()));
+		repaint();
 	}
-	
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		levelOne.mouseReleasedEvent(new Vector2i(e.getX(), e.getY()));
+		repaint();
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		levelOne.mouseClickedEvent(new Vector2i(e.getX(), e.getY()));
+		repaint();
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		update();
+		repaint(); // calls paintComponent to render objects
+	}
+
+	// ------------------------- IGNORE CODE BELOW ------------------------ //
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+	}
+
 }
