@@ -8,14 +8,17 @@ public class Level {
     private int MAX_COLS;
     private int CELLSIZE;
     private Cell[][] grid;
-    private Vector2i OFFSET;
     private Trail trail;
+    private Vector2i OFFSET;
     private static final Color[] COLORS = {
-            Color.BLUE, // 1
-            Color.MAGENTA, // 2
-            Color.RED, // 3
-            Color.GREEN, // 4
-            Color.YELLOW // 5
+            Color.getHSBColor(221f / 360, 0.86f, 0.93f), // 1 : Blue
+            Color.getHSBColor(182f / 360, 0.94f, 0.84f), // 2 : Cyan
+            Color.getHSBColor(359f / 360, 0.97f, 0.99f), // 3 : Red
+            Color.getHSBColor(20f / 360, 0.96f, 1.00f), // 4 : Orange
+            Color.getHSBColor(44f / 360, 0.91f, 0.99f), // 5 : Yellow
+            Color.getHSBColor(121f / 360, 0.57f, 0.62f), // 6 : Green
+            Color.getHSBColor(292f / 360, 0.76f, 0.80f), // 7 : Purple
+            Color.getHSBColor(318f / 360, 1.00f, 1.00f), // 7 : Pink
     };
     private boolean gameOver;
 
@@ -110,7 +113,7 @@ public class Level {
                 int n_color = this.grid[point.y][point.x].color;
 
                 for (int i = 0; i < this.grid.length; i++) {
-                    for (int j = 0; j < this.grid.length; j++) {
+                    for (int j = 0; j < this.grid[i].length; j++) {
                         if (this.grid[i][j].color == n_color) {
                             this.grid[i][j].dir = 0;
                             if (!this.grid[i][j].node) {
@@ -204,21 +207,21 @@ public class Level {
         Vector2i n = new Vector2i();
         if (n_dir == 1 || n_dir == 5 || n_dir == 8 || n_dir == 9) {
             n.x = x * this.CELLSIZE + (this.CELLSIZE - n_rectThickness) / 2 + this.OFFSET.x;
-            n.y = y * this.CELLSIZE;
+            n.y = y * this.CELLSIZE + this.OFFSET.y;
             g.fillRect(n.x, n.y, n_rectThickness, n_length);
         }
         if (n_dir == 2 || n_dir == 5 || n_dir == 6 || n_dir == 10) {
-            n.x = x * this.CELLSIZE + this.CELLSIZE / 2;
+            n.x = x * this.CELLSIZE + this.CELLSIZE / 2 + this.OFFSET.x;
             n.y = y * this.CELLSIZE + (this.CELLSIZE - n_rectThickness) / 2 + this.OFFSET.y;
             g.fillRect(n.x, n.y, n_length, n_rectThickness);
         }
         if (n_dir == 3 || n_dir == 6 || n_dir == 7 || n_dir == 9) {
             n.x = x * this.CELLSIZE + (this.CELLSIZE - n_rectThickness) / 2 + this.OFFSET.x;
-            n.y = y * this.CELLSIZE + this.CELLSIZE / 2;
+            n.y = y * this.CELLSIZE + this.CELLSIZE / 2 + this.OFFSET.y;
             g.fillRect(n.x, n.y, n_length, n_rectThickness);
         }
         if (n_dir == 4 || n_dir == 7 || n_dir == 8 || n_dir == 10) {
-            n.x = x * this.CELLSIZE;
+            n.x = x * this.CELLSIZE + this.OFFSET.x;
             n.y = y * this.CELLSIZE + (this.CELLSIZE - n_rectThickness) / 2 + this.OFFSET.y;
             g.fillRect(n.x, n.y, n_length, n_rectThickness);
         }

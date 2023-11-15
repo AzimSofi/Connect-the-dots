@@ -24,48 +24,133 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 	}
 
 	public void init() {
-		int TOTAL_LEVELS = 3;
-		this.levels = new Level[TOTAL_LEVELS];
 		this.currentLevel = 0;
 
 		int[][] levelData1 = {
 				{ 1, 1 },
-				{ 2, 2 }
+				{ 0, 0 }
 		};
-		this.addLevel(levelData1);
-
 		int[][] levelData2 = {
-				{ 1, 1, 2 },
-				{ 0, 0, 0 },
-				{ 0, 0, 2 }
+				{ 1, 1 },
+				{ 4, 4 }
 		};
-		this.addLevel(levelData2);
-
 		int[][] levelData3 = {
-				{ 1, 0, 0, 0, 0 },
-				{ 2, 1, 0, 5, 0 },
-				{ 0, 3, 4, 0, 0 },
-				{ 0, 0, 5, 0, 4 },
-				{ 2, 0, 0, 0, 3 }
+				{ 1, 1, 3 },
+				{ 0, 0, 0 },
+				{ 0, 0, 3 }
 		};
-		this.addLevel(levelData3);
-		// int[][] levelData = {
-		// { 1, 0, 2 },
-		// { 0, 0, 3 },
-		// { 0, 1, 2 },
-		// { 0, 3, 0 }
-		// };
+		int[][] levelData4 = {
+				{ 1, 1, 6 },
+				{ 0, 3, 6 },
+				{ 0, 0, 3 }
+		};
+		int[][] levelData5 = {
+				{ 1, 0, 0, 0, 0 },
+				{ 4, 1, 0, 5, 0 },
+				{ 0, 3, 6, 0, 0 },
+				{ 0, 0, 5, 0, 6 },
+				{ 4, 0, 0, 0, 3 }
+		};
+		int[][] levelData6 = {
+				{ 1, 3, 0, 6, 0 },
+				{ 0, 0, 0, 0, 0 },
+				{ 2, 0, 0, 0, 0 },
+				{ 0, 6, 1, 3, 0 },
+				{ 2, 0, 0, 0, 0 }
+		};
+		int[][] levelData7 = {
+				{ 5, 0, 0, 0, 3 },
+				{ 0, 4, 1, 0, 0 },
+				{ 0, 0, 0, 0, 3 },
+				{ 0, 1, 6, 0, 0 },
+				{ 0, 5, 0, 6, 4 }
+		};
+		int[][] levelData8 = {
+				{ 5, 0, 0, 0, 0 },
+				{ 0, 0, 0, 0, 0 },
+				{ 0, 0, 6, 0, 0 },
+				{ 1, 6, 3, 0, 5 },
+				{ 3, 0, 0, 0, 1 }
+		};
+		int[][] levelData9 = {
+				{ 0, 0, 0, 0, 2, 5 },
+				{ 0, 3, 0, 0, 1, 0 },
+				{ 2, 0, 0, 5, 0, 0 },
+				{ 0, 0, 0, 0, 0, 6 },
+				{ 0, 6, 0, 0, 1, 0 },
+				{ 0, 0, 3, 0, 0, 0 }
+		};
+		int[][] levelData10 = {
+				{ 0, 0, 2, 0, 0, 0 },
+				{ 0, 3, 0, 0, 6, 0 },
+				{ 2, 0, 0, 0, 0, 0 },
+				{ 3, 5, 6, 0, 5, 0 },
+				{ 0, 0, 0, 0, 0, 0 },
+				{ 0, 0, 0, 0, 0, 0 }
+		};
+		int[][] levelData11 = {
+				{ 0, 1, 0, 0, 0, 0 },
+				{ 0, 5, 0, 0, 2, 0 },
+				{ 0, 1, 3, 0, 7, 5 },
+				{ 0, 0, 0, 0, 0, 0 },
+				{ 0, 6, 2, 0, 6, 0 },
+				{ 3, 0, 0, 0, 0, 7 }
+		};
+		int[][] levelData12 = {
+				{ 0, 0, 0, 2, 3, 6 },
+				{ 0, 0, 5, 0, 0, 0 },
+				{ 2, 0, 3, 0, 0, 0 },
+				{ 0, 0, 0, 1, 0, 7 },
+				{ 0, 0, 0, 6, 0, 0 },
+				{ 5, 1, 7, 0, 0, 0 }
+		};
+		int[][] levelData13 = {
+				{ 0, 0, 0, 3, 0, 0, 5, 0 },
+				{ 0, 1, 0, 0, 6, 0, 0, 0 },
+				{ 0, 0, 0, 2, 0, 0, 0, 0 },
+				{ 0, 0, 0, 0, 1, 0, 0, 0 },
+				{ 7, 0, 4, 8, 0, 6, 0, 0 },
+				{ 0, 0, 0, 0, 0, 0, 3, 0 },
+				{ 0, 0, 2, 0, 0, 0, 0, 5 },
+				{ 0, 0, 0, 7, 0, 4, 0, 8 }
+		};
+		int[][] levelData14 = {
+				{ 0, 0, 0, 0, 0, 1, 0, 0, 0 },
+				{ 0, 0, 0, 0, 0, 0, 0, 2, 0 },
+				{ 0, 4, 5, 0, 0, 4, 0, 0, 0 },
+				{ 0, 0, 0, 6, 0, 0, 0, 2, 0 },
+				{ 0, 6, 0, 0, 0, 0, 0, 1, 0 },
+				{ 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+				{ 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+				{ 0, 5, 0, 0, 0, 3, 0, 3, 0 },
+				{ 0, 0, 0, 0, 0, 0, 0, 0, 0 }
+		};
+
+		int[][][] levelDatas = {
+				levelData1,
+				levelData2,
+				levelData3,
+				levelData4,
+				levelData5,
+				levelData6,
+				levelData7,
+				levelData8,
+				levelData9,
+				levelData10,
+				levelData11,
+				levelData12,
+				levelData13,
+				levelData14,
+		};
+		this.setLevel(levelDatas);
 	}
 
-	public void addLevel(int[][] levelData) {
-		Level level = new Level(SCREEN_WIDTH, SCREEN_HEIGHT);
-		level.setGrid(levelData);
-
-		for (int i = 0; i < this.levels.length; i++) {
-			if (this.levels[i] == null) {
-				this.levels[i] = level;
-				break;
-			}
+	public void setLevel(int[][][] levelDatas) {
+		this.levels = new Level[levelDatas.length];
+		for (int i = 0; i < levelDatas.length; i++) {
+			Level level = new Level(SCREEN_WIDTH, SCREEN_HEIGHT);
+			level.setGrid(levelDatas[i]);
+			this.levels[i] = level;
 		}
 	}
 
