@@ -88,7 +88,21 @@ public class Level {
     public void mousePressEvent(Vector2i mousePos) {
         if (this.isMouseInBound(mousePos)) {
             Vector2i point = this.mouseToPoint2i(mousePos);
-            if (this.isNode(point)) {
+
+            if (this.grid[point.y][point.x].dir > 0) {
+                int n_color = this.grid[point.y][point.x].color;
+
+                for (int i = 0; i < this.grid.length; i++) {
+                    for (int j = 0; j < this.grid.length; j++) {
+                        if (this.grid[i][j].color == n_color) {
+                            this.grid[i][j].dir = 0;
+                            if (!this.grid[i][j].node) {
+                                this.grid[i][j].color = 0;
+                            }
+                        }
+                    }
+                }
+            } else if (this.isNode(point)) {
                 this.trail.setColor(this.grid[point.y][point.x].color);
                 this.trail.addPoint(point);
                 // System.out.println("Mouse Pressed = Point Added (" + point.x + ", " + point.y
@@ -137,24 +151,6 @@ public class Level {
                 // ")"); // temp (can delete)
             } else if (this.trail.isPrevPoint(point)) {
                 this.trail.pop();
-            }
-        }
-    }
-
-    public void mouseClickedEvent(Vector2i mousePos) {
-        if (this.isMouseInBound(mousePos)) {
-            Vector2i point = this.mouseToPoint2i(mousePos);
-
-            int n_color = this.grid[point.y][point.x].color;
-            for (int i = 0; i < this.grid.length; i++) {
-                for (int j = 0; j < this.grid.length; j++) {
-                    if (this.grid[i][j].color == n_color) {
-                        this.grid[i][j].dir = 0;
-                        if (!this.grid[i][j].node) {
-                            this.grid[i][j].color = 0;
-                        }
-                    }
-                }
             }
         }
     }

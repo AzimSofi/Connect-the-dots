@@ -71,18 +71,16 @@ public class GamePanel extends JPanel implements ActionListener, MouseListener, 
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent e) {
-		levelOne.mouseClickedEvent(new Vector2i(e.getX(), e.getY()));
-		repaint();
-	}
-
-	@Override
 	public void actionPerformed(ActionEvent e) {
 		update();
 		repaint(); // calls paintComponent to render objects
 	}
 
 	// ------------------------- IGNORE CODE BELOW ------------------------ //
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
