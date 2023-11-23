@@ -78,7 +78,7 @@ public class Level {
         return this.grid[point.y][point.x].node;
     }
 
-    private boolean isMouseInBound(Vector2i mousePos) {
+    private boolean isMouseInBound(Vector2i mousePos) { // if mouse is outside of game cell bound, return false
         int N_PANEL_H = this.MAX_COLS * this.CELLSIZE;
         int N_PANEL_W = this.MAX_ROWS * this.CELLSIZE;
 
@@ -88,7 +88,7 @@ public class Level {
         return b_x && b_y;
     }
 
-    private Vector2i mouseToPoint2i(Vector2i mousePos) {
+    private Vector2i mouseToPoint2i(Vector2i mousePos) { // converts mouse coords to grid index coords
         Vector2i n = new Vector2i();
         for (int i = 0; i < this.MAX_COLS; i++) {
             int n_col_x = this.OFFSET.x + i * this.CELLSIZE;
@@ -133,7 +133,8 @@ public class Level {
         Vector2i point = this.trail.getTop();
         if (point != null) {
             if (this.isNode(point) && this.getGridColor(point) == trail.getColor()
-                    && trail.getIndex() > 0) {
+                    && trail.getIndex() > 0) { // if the trail is connected from one node to another (can't be from one
+                                               // node to same note)
 
                 int[] dirs = trail.getDirs();
                 while (trail.getTop() != null) {
@@ -167,6 +168,8 @@ public class Level {
 
     public void render(Graphics g) {
         renderBorders(g);
+
+        // Renders fixed lines and dots
         for (int i = 0; i < this.grid.length; i++) {
             for (int j = 0; j < this.grid[i].length; j++) {
                 int n_color = this.grid[i][j].color;
@@ -180,6 +183,7 @@ public class Level {
             }
         }
 
+        // Renders Trail lines
         Vector2i[] points = this.trail.getPoints();
         int[] dirs = this.trail.getDirs();
         for (int i = 0; i < points.length; i++) {

@@ -142,10 +142,10 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 				levelData13,
 				levelData14,
 		};
-		this.setLevel(levelDatas);
+		this.setLevels(levelDatas);
 	}
 
-	public void setLevel(int[][][] levelDatas) {
+	public void setLevels(int[][][] levelDatas) {
 		this.levels = new Level[levelDatas.length];
 		for (int i = 0; i < levelDatas.length; i++) {
 			Level level = new Level(SCREEN_WIDTH, SCREEN_HEIGHT);
