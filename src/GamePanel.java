@@ -130,17 +130,17 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 				levelData1,
 				levelData2,
 				levelData3,
-				// levelData4,
-				// levelData5,
-				// levelData6,
-				// levelData7,
-				// levelData8,
-				// levelData9,
-				// levelData10,
-				// levelData11,
-				// levelData12,
-				// levelData13,
-				// levelData14, 
+				levelData4,
+				levelData5,
+				levelData6,
+				levelData7,
+				levelData8,
+				levelData9,
+				levelData10,
+				levelData11,
+				levelData12,
+				levelData13,
+				// levelData14, // 難しいすぎる
 		};
 		this.setLevels(levelDatas);
 	}
