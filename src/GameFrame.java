@@ -3,10 +3,10 @@ import javax.swing.JFrame;
 public class GameFrame extends JFrame {
 
     GameFrame() {
-        this.add(new GamePanel());
-        this.setTitle("Connect The Choromosomes");
+        this.setTitle("Connect The Chromosomes");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
+        this.setContentPane(new MainMenuPanel(this));
         this.pack();
         this.setVisible(true);
         this.setLocationRelativeTo(null);
