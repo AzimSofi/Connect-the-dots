@@ -183,11 +183,15 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 			if (this.currentLevel >= this.levels.length || this.levels[this.currentLevel] == null) {
 				// System.exit(0);
 
-				JOptionPane.showMessageDialog(this, "Congratulations, you finished the game!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
-				
-				JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
-				topFrame.setContentPane(new MainMenuPanel(topFrame));
-				topFrame.pack();
+				// Fix timing
+				SwingUtilities.invokeLater(() -> {
+					JOptionPane.showMessageDialog(this, "Congratulations, you finished the game!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+					
+					JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+					topFrame.setContentPane(new MainMenuPanel(topFrame));
+					topFrame.pack();
+					topFrame.revalidate();
+				});
 			}
 		}
 	}
