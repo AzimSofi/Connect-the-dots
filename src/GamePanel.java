@@ -140,7 +140,7 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 				levelData11,
 				levelData12,
 				levelData13,
-				levelData14,
+				// levelData14, // 難しいすぎる
 		};
 		this.setLevels(levelDatas);
 	}
@@ -152,6 +152,8 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 			level.setGrid(levelDatas[i]);
 			this.levels[i] = level;
 		}
+
+
 	}
 
 	public void render(Graphics g) {
@@ -179,7 +181,17 @@ public class GamePanel extends JPanel implements MouseListener, MouseMotionListe
 			this.currentLevel += 1;
 
 			if (this.currentLevel >= this.levels.length || this.levels[this.currentLevel] == null) {
-				System.exit(0);
+				// System.exit(0);
+
+				// Fix timing
+				SwingUtilities.invokeLater(() -> {
+					JOptionPane.showMessageDialog(this, "Congratulations, you finished the game!", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+					
+					JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+					topFrame.setContentPane(new MainMenuPanel(topFrame));
+					topFrame.pack();
+					topFrame.revalidate();
+				});
 			}
 		}
 	}
